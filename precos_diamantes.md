@@ -1,4 +1,4 @@
-## Este é meu projeto final da materia de machine learning
+# Este é meu projeto final da materia de Machine Learning
 library(tidyverse)
 library(glmnet)
 library(workflows)
@@ -19,13 +19,13 @@ library(devtools)
 data("diamonds")
 set.seed(123)
 
-# Divisão dos dados: Treinamento (70%), Teste (15%) e Validação (15%)
+## Divisão dos dados: Treinamento (70%), Teste (15%) e Validação (15%)
 diamonds_dividido <- initial_split(diamonds, prop = 0.7, strata = price)
 diamonds_treino <- training(diamonds_dividido)
 
 diamonds_teste <- testing(diamonds_dividido)
 
-# Dividindo o conjunto de teste em 50% para teste e 50% para validação
+## Dividindo o conjunto de teste em 50% para teste e 50% para validação
 diamonds_teste_dividido <- initial_split(diamonds_teste, prop = 0.5, strata = price)
 diamonds_teste <- training(diamonds_teste_dividido)
 diamonds_validacao <- testing(diamonds_teste_dividido)
@@ -77,13 +77,13 @@ print(svr_metrics)
 
 # Gráficos
 
-# Preço dos diamantes
+## Preço dos diamantes
 ggplot(diamonds_treino, aes(x = price)) +
   geom_histogram(bins = 30, fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Distribuição do Preço dos Diamantes", x = "Preço", y = "Contagem") +
   theme_minimal()
 
-# Modelos x Preço real (Gráfico de dispersão)
+## Modelos x Preço real (Gráfico de dispersão)
 ggplot() +
   geom_point(data = lasso_preds, aes(x = price, y = .pred, color = "Lasso"), alpha = 0.5) +
   geom_point(data = rf_preds, aes(x = price, y = .pred, color = "Random Forest"), alpha = 0.5) +
@@ -94,7 +94,7 @@ ggplot() +
   theme(legend.title = element_blank(), legend.position = "bottom")
 
 
-# Erro absoluto dos modelos
+## Erro absoluto dos modelos
 lasso_preds <- lasso_preds %>%
   mutate(lasso_error = abs(price - .pred))
 rf_preds <- rf_preds %>%
@@ -102,7 +102,7 @@ rf_preds <- rf_preds %>%
 svr_preds <- svr_preds %>%
   mutate(svr_error = abs(price - .pred))
 
-# Comparando os erros absolutos
+## Comparando os erros absolutos
 ggplot() +
   geom_boxplot(data = lasso_preds, aes(y = lasso_error, x = "Lasso", fill = "Lasso"), alpha = 0.5) +
   geom_boxplot(data = rf_preds, aes(y = rf_error, x = "Random Forest", fill = "Random Forest"), alpha = 0.5) +
